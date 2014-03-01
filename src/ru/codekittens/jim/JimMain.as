@@ -31,6 +31,8 @@ public class JimMain {
 
         App.errorHandler = new ErrorHandler(window);
 
+        App.uiModel = new UIModel();
+
         startScreen = new StartScreen();
         var startScreenPresenter:StartScreenPresenter = new StartScreenPresenter(startScreen);
 
@@ -55,7 +57,7 @@ public class JimMain {
             window.removeAllElements();
         });
 
-        App.eventBus.addEventListener(AppErrorEvent.ERROR, function(event:AppErrorEvent):void {
+        App.eventBus.addEventListener(AppErrorEvent.ERROR, function (event:AppErrorEvent):void {
            App.errorHandler.error(event.getMessage());
         });
     }

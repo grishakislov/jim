@@ -13,11 +13,11 @@ public class StartScreenPresenter {
     public function StartScreenPresenter(view:StartScreen) {
         this.view = view;
 
-        view.btnScanner.addEventListener(MouseEvent.CLICK, function (event:MouseEvent):void {
+        view.getBtnScanner().addEventListener(MouseEvent.CLICK, function (event:MouseEvent):void {
             App.eventBus.dispatchEvent(new ModeSelectedEvent(ModeSelectedEvent.SCANNER_SELECTED));
         });
 
-        view.btnViewer.addEventListener(MouseEvent.CLICK, function (event:MouseEvent):void {
+        view.getBtnViewer().addEventListener(MouseEvent.CLICK, function (event:MouseEvent):void {
             App.eventBus.dispatchEvent(new ModeSelectedEvent(ModeSelectedEvent.VIEWER_SELECTED));
         });
     }

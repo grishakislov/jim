@@ -15,8 +15,8 @@ import spark.layouts.HorizontalLayout;
 
 public class StartScreen extends HGroup {
 
-    private var _btnScanner:Button;
-    private var _btnViewer:Button;
+    private var btnScanner:Button;
+    private var btnViewer:Button;
 
     public function StartScreen() {
         var bitmap:Bitmap = new Resources.IMG_START();
@@ -35,14 +35,14 @@ public class StartScreen extends HGroup {
         var img:Image = new Image();
         img.source = bitmap;
 
-        _btnScanner = new Button();
-        _btnScanner.label = "Scanner";
-        _btnViewer = new Button();
-        _btnViewer.label = "Viewer";
+        btnScanner = new Button();
+        btnScanner.label = "Scanner";
+        btnViewer = new Button();
+        btnViewer.label = "Viewer";
 
         imageContainer.addElement(img);
-        buttonContainer.addElement(_btnScanner);
-        buttonContainer.addElement(_btnViewer);
+        buttonContainer.addElement(btnScanner);
+        buttonContainer.addElement(btnViewer);
 
         buttonContainer.x = 0;
         buttonContainer.y = 220;
@@ -54,12 +54,12 @@ public class StartScreen extends HGroup {
 
     }
 
-    public function get btnScanner():Button {
-        return _btnScanner;
+    public function getBtnScanner():Button {
+        return btnScanner;
     }
 
-    public function get btnViewer():Button {
-        return _btnViewer;
+    public function getBtnViewer():Button {
+        return btnViewer;
     }
 }
 }

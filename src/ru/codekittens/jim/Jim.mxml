@@ -2,7 +2,7 @@
 <jim:JimWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
                xmlns:s="library://ns.adobe.com/flex/spark"
                xmlns:jim="ru.codekittens.jim.*"
-               width="640" height="480" backgroundColor="#545454" showStatusBar="false" resizing="false">
+               width="640" height="480" backgroundColor="#252525" showStatusBar="false" resizing="false">
     <jim:layout>
         <s:BasicLayout />
     </jim:layout>

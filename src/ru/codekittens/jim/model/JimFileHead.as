@@ -7,7 +7,6 @@ public class JimFileHead {
     public var scrollType:ScrollType;
     public var numLayers:uint;
     public var startPosition:Point;
-    public var layers:Vector.<LayerDefinition>;
     public var cameraPath:Vector.<Point>;
 
 }

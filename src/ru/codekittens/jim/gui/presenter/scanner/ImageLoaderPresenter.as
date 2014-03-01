@@ -6,11 +6,16 @@ import flash.events.Event;
 import flash.events.IOErrorEvent;
 import flash.events.MouseEvent;
 import flash.events.NativeDragEvent;
+import flash.events.NativeWindowBoundsEvent;
 import flash.filesystem.File;
 import flash.filesystem.FileMode;
 import flash.filesystem.FileStream;
 import flash.net.FileReference;
 import flash.utils.ByteArray;
+
+import mx.collections.ArrayList;
+
+import mx.collections.IList;
 
 import mx.managers.DragManager;
 
@@ -23,10 +28,15 @@ import ru.codekittens.jim.gui.view.scanner.ImageLoaderPanel;
 public class ImageLoaderPresenter {
 
     private var view:ImageLoaderPanel;
+    private static const DEFAULT_LAYER_TEXT:String = "New layer";
 
     public function ImageLoaderPresenter(view:ImageLoaderPanel) {
 
         this.view = view;
+
+        view.getLstLayer().dataProvider = getLayersListDataProvider();
+        view.getLstLayer().prompt = DEFAULT_LAYER_TEXT;
+        view.getLstLayer().enabled = false;
 
         view.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER, function (event:NativeDragEvent):void {
             if (event.clipboard.hasFormat(ClipboardFormats.FILE_LIST_FORMAT)) {
@@ -72,6 +82,16 @@ public class ImageLoaderPresenter {
             fileReference.browse();
         });
 
+    }
+
+    private function getLayersListDataProvider():IList {
+        var result:IList = new ArrayList();
+        if (App.uiModel.hasLayers()) {
+            for (var i:int = 0; i < App.uiModel.currentLayers.length; i++) {
+                result.addItem(App.uiModel.currentLayers[i].definition.title);
+            }
+        }
+        return result;
     }
 
     private function ioErrorHandler(event:IOErrorEvent):void {
