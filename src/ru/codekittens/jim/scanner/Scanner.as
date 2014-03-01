@@ -3,11 +3,14 @@ import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
+import flash.globalization.NationalDigitsType;
 import flash.net.FileReference;
 import flash.utils.ByteArray;
 
 import ru.codekittens.jim.converter.JimConverter;
-import ru.codekittens.jim.model.JimModel;
+import ru.codekittens.jim.model.JimFile;
+import ru.codekittens.jim.model.JimLayer;
+import ru.codekittens.jim.model.LayerDefinition;
 
 public class Scanner {
 
@@ -25,26 +28,27 @@ public class Scanner {
     private var currentId:uint = 0;
 
     //data
-    private var model:JimModel;
+    private var model:JimLayer;
+    private var definition:LayerDefinition;
     private var hashedTiles:Object;
 
     public function Scanner(tileSize:uint) {
         this.tileSize = tileSize;
     }
 
-    public function scan(source:Bitmap):void {
+    public function scan(source:Bitmap, definition:LayerDefinition):void {
         this.source = source;
         sourceWidth = source.bitmapData.width / tileSize;
         sourceHeight = source.bitmapData.height / tileSize;
         hashedTiles = {};
         currentPoint = new Point();
         currentRect = new Rectangle(0, 0, tileSize, tileSize);
-        initMap();
+        initLayer();
         startScan();
     }
 
-    private function initMap():void {
-        model = new JimModel();
+    private function initLayer():void {
+        model = new JimFile();
         model.width = sourceWidth;
         model.height = sourceHeight;
         model.tileSize = tileSize;
