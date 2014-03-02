@@ -1,4 +1,4 @@
-package ru.codekittens.jim.gui.presenter.scanner {
+package ru.codekittens.jim.gui.presenter.editor {
 import flash.desktop.ClipboardFormats;
 import flash.display.Bitmap;
 import flash.display.Loader;
@@ -38,7 +38,7 @@ public class ImageLoaderPresenter {
         view.getLstLayer().prompt = DEFAULT_LAYER_TEXT;
         view.getLstLayer().enabled = false;
 
-        view.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER, function (event:NativeDragEvent):void {
+        view.getDragContainer().addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER, function (event:NativeDragEvent):void {
             if (event.clipboard.hasFormat(ClipboardFormats.FILE_LIST_FORMAT)) {
                 var files:Array = event.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
                 if (files.length == 1) {
@@ -106,7 +106,7 @@ public class ImageLoaderPresenter {
             App.eventBus.dispatchEvent(new AppErrorEvent("Invalid type"))
         } else {
             trace("Image loaded successfully")
-            App.eventBus.dispatchEvent(new ImageLoadedEvent(bitmap));
+            App.eventBus.dispatchEvent(new ImageLoadedEvent(ImageLoadedEvent.IMAGE_LOADED, bitmap, view.getTileSizeStepper().value));
         }
     }
 
