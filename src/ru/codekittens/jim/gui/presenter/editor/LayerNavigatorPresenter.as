@@ -6,6 +6,7 @@ import ru.codekittens.jim.App;
 import ru.codekittens.jim.gui.events.LayersChangedEvent;
 import ru.codekittens.jim.gui.view.editor.layer.LayerNavigator;
 import ru.codekittens.jim.gui.view.editor.layer.LayerItem;
+import ru.codekittens.jim.gui.view.editor.layer.LayerPanel;
 import ru.codekittens.jim.model.JimLayer;
 import ru.codekittens.jim.scanner.JimHelper;
 
@@ -20,6 +21,11 @@ public class LayerNavigatorPresenter {
         this.view = view;
 
 
+    }
+
+    public function updateCurrentLayer(layer:JimLayer):void {
+        var currentItem:LayerItem = LayerItem(view.getLayerTab().selectedChild);
+        populateLayerPanel(currentItem, layer);
     }
 
     public function addNewLayer(layer:JimLayer):void {

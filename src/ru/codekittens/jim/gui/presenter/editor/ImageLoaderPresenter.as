@@ -23,10 +23,13 @@ import ru.codekittens.jim.gui.events.LayersChangedEvent;
 import ru.codekittens.jim.gui.view.editor.layer.ImageLoaderPanel;
 import ru.codekittens.jim.model.JimLayer;
 
+import spark.events.IndexChangeEvent;
+
 public class ImageLoaderPresenter {
 
     private var view:ImageLoaderPanel;
     private static const DEFAULT_LAYER_TEXT:String = "New layer";
+    private var currentMode:LayerAddMode;
 
     public function ImageLoaderPresenter(view:ImageLoaderPanel) {
 
@@ -34,6 +37,14 @@ public class ImageLoaderPresenter {
 
         view.getLstLayer().prompt = LayerAddMode.NEW_LAYER.getName();
         view.getLstLayer().enabled = false;
+        currentMode = LayerAddMode.NEW_LAYER;
+
+        view.getLstLayer().addEventListener(IndexChangeEvent.CHANGE, function(event:IndexChangeEvent):void {
+            var name:String = getLstLayersDataProvider().getItemAt(event.newIndex).toString();
+            var mode:LayerAddMode = LayerAddMode.getByName(name);
+            currentMode = mode != null ? mode : LayerAddMode.EXISTING_LAYER;
+            trace(currentMode.getName());
+        });
 
         App.eventBus.addEventListener(LayersChangedEvent.LAYERS_CHANGED, function(event:LayersChangedEvent):void {
             updatePanel();
@@ -120,7 +131,7 @@ public class ImageLoaderPresenter {
             trace("Image loaded successfully")
             App.eventBus.dispatchEvent(
                     new ImageLoadedEvent(
-                            ImageLoadedEvent.IMAGE_LOADED, bitmap, App.uiModel.currentFile.head.tileSize));
+                            ImageLoadedEvent.IMAGE_LOADED, bitmap, App.uiModel.currentFile.head.tileSize, currentMode));
         }
     }
 

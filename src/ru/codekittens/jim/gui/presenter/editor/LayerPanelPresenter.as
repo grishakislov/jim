@@ -21,10 +21,21 @@ public class LayerPanelPresenter {
         App.eventBus.addEventListener(ImageLoadedEvent.IMAGE_LOADED, function (event:ImageLoadedEvent):void {
             var layer:JimLayer = Scanner.scan(event.getImage(), event.getTileSize());
             App.uiModel.currentFile.layers.push(layer);
-            view.removeElement(view.getEmptyLayerNavigator());
-            view.addElement(view.getLayerNavigator());
+            if (view.containsElement(view.getEmptyLayerNavigator())) {
+                view.removeElement(view.getEmptyLayerNavigator());
+                view.addElement(view.getLayerNavigator());
+            }
+
+            switch (event.getMode()) {
+                case LayerAddMode.NEW_LAYER:
+                    layerNavigatorPresenter.addNewLayer(layer);
+                    break;
+                case LayerAddMode.CURRENT_LAYER:
+                    layerNavigatorPresenter.updateCurrentLayer(layer);
+                    break;
+            }
             //TODO: create new/update existing
-            layerNavigatorPresenter.addNewLayer(layer);
+
             App.eventBus.dispatchEvent(new LayersChangedEvent(LayersChangedEvent.LAYERS_CHANGED));
         });
 

@@ -17,14 +17,23 @@ public class LayerAddMode {
     }
 
     public function getName():String {
-        if (name == "Existing layer") {
-            return layer.definition.title;
-        }
         return name;
     }
 
     public function getLayer():JimLayer {
         return layer;
+    }
+
+    public static function getByName(name:String):LayerAddMode {
+        switch (name) {
+            case NEW_LAYER.getName():
+                    return NEW_LAYER;
+            case CURRENT_LAYER.getName():
+                return CURRENT_LAYER;
+            case EXISTING_LAYER.getName():
+                return EXISTING_LAYER;
+        }
+        return null;
     }
 }
 }
