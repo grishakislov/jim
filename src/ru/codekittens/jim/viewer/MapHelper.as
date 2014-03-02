@@ -8,14 +8,18 @@ import flash.utils.ByteArray;
 import jim_model.JimLayer;
 import jim_model.LayerDefinition;
 
+import ru.codekittens.jim.model.JimLayer;
+
+import ru.codekittens.jim.scanner.JimHelper;
+
 internal class MapHelper {
 
-    public static function loadLayer(layer:JimLayer, definition:LayerDefinition):BitmapData {
+    public static function loadLayer(layer:JimLayer):BitmapData {
         var bitmapWidth:uint = definition.width * definition.tileSize;
         var bitmapHeight:uint = definition.height * definition.tileSize;
         var bitmapData:BitmapData = new BitmapData(bitmapWidth, bitmapHeight, true, 0);
 
-        var dictionary:BitmapData = createDictionaryBitmapData(layer.tileDictionary);
+        var dictionary:BitmapData = JimHelper.convertTilesDictionaryToBitmapData(layer)
 
         var currentId:uint;
 
@@ -42,11 +46,6 @@ internal class MapHelper {
         return result;
     }
 
-    private static function createDictionaryBitmapData(data:ByteArray):BitmapData {
-        var result:BitmapData = new BitmapData(256, 256, true, 0);
-        result.setPixels(result.rect, data);
-        return result;
-    }
 
 }
 }

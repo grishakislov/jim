@@ -5,9 +5,8 @@ import mx.controls.Button;
 import spark.components.ButtonBar;
 import spark.components.Label;
 import spark.components.VGroup;
-import spark.layouts.VerticalAlign;
 
-public class EditorButtonGroup extends MainButtonPanel {
+public class EditorButtonGroup extends VGroup {
 
     private var editorButtonBar:ButtonBar;
     private var btnLevel:Button;
@@ -15,12 +14,12 @@ public class EditorButtonGroup extends MainButtonPanel {
     private var btnPath:Button;
 
     public function EditorButtonGroup() {
-        vGroup = new VGroup();
-        vGroup.paddingLeft = vGroup.paddingRight = 10.
-        vGroup.verticalAlign = VerticalAlign.MIDDLE;
+        paddingTop = 5;
+        gap = 10;
 
         var label:Label = new Label();
         label.text = "Editor:"
+        label.setStyle("color", "0xFFFFFF")
 
         btnLevel = new Button();
         btnLevel.label = "Level";
@@ -30,15 +29,16 @@ public class EditorButtonGroup extends MainButtonPanel {
 
         btnPath = new Button();
         btnPath.label = "Path";
-        btnPath.enabled = false; //TODO:
 
         editorButtonBar = new ButtonBar();
         editorButtonBar.dataProvider = new ArrayList([btnLevel, btnLayers, btnPath]);
 
-        vGroup.addElement(label);
-        vGroup.addElement(editorButtonBar);
+        addElement(label);
+        addElement(editorButtonBar);
+    }
 
-        addElement(vGroup);
+    public function getEditorButtonBar():ButtonBar {
+        return editorButtonBar;
     }
 }
 }

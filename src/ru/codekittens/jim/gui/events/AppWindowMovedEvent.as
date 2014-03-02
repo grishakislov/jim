@@ -1,6 +1,16 @@
 package ru.codekittens.jim.gui.events {
-public class AppWindowMovedEvent {
-    public function AppWindowMovedEvent() {
+import flash.events.Event;
+import flash.geom.Point;
+
+public class AppWindowMovedEvent extends Event{
+
+    public static const MOVED:String = "app_window_moved";
+
+    private var delta:Point;
+
+    public function AppWindowMovedEvent(type:String, delta:Point) {
+        super(type);
+        this.delta = delta;
     }
 }
 }

@@ -1,21 +1,12 @@
 package ru.codekittens.jim.gui.events {
 import flash.events.Event;
 
-import ru.codekittens.jim.model.JimLayer;
-
 public class LayersChangedEvent extends Event {
 
-    public static const LAYER_ADDED:String = "layer_added";
+    public static const LAYERS_CHANGED:String = "layers_changed";
 
-    private var layer:JimLayer;
-
-    public function LayersChangedEvent(type:String, layer:JimLayer) {
+    public function LayersChangedEvent(type:String) {
         super(type);
-        this.layer = layer;
-    }
-
-    public function getLayer():JimLayer {
-        return layer;
     }
 }
 }

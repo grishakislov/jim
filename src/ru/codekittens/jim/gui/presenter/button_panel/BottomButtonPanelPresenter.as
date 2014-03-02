@@ -6,9 +6,11 @@ import mx.events.IndexChangedEvent;
 import mx.events.ItemClickEvent;
 
 import ru.codekittens.jim.App;
+import ru.codekittens.jim.UIModel;
 import ru.codekittens.jim.gui.events.LayersChangedEvent;
 import ru.codekittens.jim.gui.events.EditorSelectedEvent;
 import ru.codekittens.jim.gui.events.ViewerSelectedEvent;
+import ru.codekittens.jim.gui.presenter.MainMode;
 
 import ru.codekittens.jim.gui.view.button_panel.MainButtonPanel;
 
@@ -19,13 +21,10 @@ public class BottomButtonPanelPresenter {
 
     private var view:MainButtonPanel;
 
-    private static var EDITOR:uint = 0;
-    private static var VIEWER:uint = 0;
-
     public function BottomButtonPanelPresenter(view:MainButtonPanel) {
         this.view = view;
 
-
+        var editorButtonGroupPresenter:EditorButtonGroupPresenter = new EditorButtonGroupPresenter(view.getEditorGroup());
 
         App.eventBus.addEventListener(LayersChangedEvent.LAYERS_CHANGED, function(event:LayersChangedEvent):void {
 //            view.getBtnViewer().enabled = App.uiModel.hasLayers();
@@ -34,7 +33,7 @@ public class BottomButtonPanelPresenter {
 
         view.getButtonBar().addEventListener(IndexChangeEvent.CHANGE, function(event:IndexChangeEvent):void {
             switch (event.newIndex) {
-                case EDITOR:
+                case MainMode.EDITOR.getIndex():
                     if (view.containsElement(view.getViewerGroup())) {
                         view.removeElement(view.getViewerGroup());
                     }
@@ -44,7 +43,7 @@ public class BottomButtonPanelPresenter {
 //                    App.eventBus.dispatchEvent(new ViewerSelectedEvent(ViewerSelectedEvent.VIEWER_SELECTED, null))
                     break;
 
-                case VIEWER:
+                case MainMode.VIEWER.getIndex():
                     if (view.containsElement(view.getEditorGroup())) {
                         view.removeElement(view.getEditorGroup());
                     }

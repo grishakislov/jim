@@ -15,7 +15,6 @@ public class LayerItem extends NavigatorContent {
 
     private var txtLayerInput:TextInput;
     private var layerTiles:Image;
-    private static const INDENT:uint = 80;
     private static const PADDING:uint = 10;
 
     public function LayerItem() {
@@ -39,7 +38,7 @@ public class LayerItem extends NavigatorContent {
 
     private function createEditableInfo(label:Label, text:TextInput):HGroup {
         var result:HGroup = new HGroup();
-        label.width = INDENT;
+        label.width = App.settings.FORM_INDENT;
         result.addElement(label);
         result.addElement(text);
         return result;

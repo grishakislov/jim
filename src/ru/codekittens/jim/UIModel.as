@@ -1,12 +1,20 @@
 package ru.codekittens.jim {
+import ru.codekittens.jim.gui.presenter.button_panel.EditorMode;
+import ru.codekittens.jim.model.JimFile;
 import ru.codekittens.jim.model.JimLayer;
+import ru.codekittens.jim.model.LayerDefinition;
 
 public class UIModel {
 
-    public var currentLayers:Vector.<JimLayer> = new Vector.<JimLayer>();
+    public var currentFile:JimFile;
+    public var currentEditorMode:EditorMode;
+    public var currentLayer:JimLayer;
 
     public function hasLayers():Boolean {
-        return currentLayers.length > 0;
+        if (currentFile == null) {
+            return false;
+        }
+        return currentFile.layers.length > 0;
     }
 
 }

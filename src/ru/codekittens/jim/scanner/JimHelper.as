@@ -1,11 +1,32 @@
 package ru.codekittens.jim.scanner {
 import flash.display.BitmapData;
+import flash.geom.Point;
+
+import ru.codekittens.jim.model.JimFile;
+import ru.codekittens.jim.model.JimFileHead;
 
 import ru.codekittens.jim.model.JimLayer;
 
 import ru.codekittens.jim.model.LayerDefinition;
+import ru.codekittens.jim.model.ScrollType;
 
 public class JimHelper {
+
+    public static function createEmptyJimFile():JimFile {
+        var file:JimFile = new JimFile();
+
+        var head:JimFileHead = new JimFileHead();
+        head.title = "New level";
+        head.tileSize = 16;
+        head.scrollType = ScrollType.FULL;
+        head.numLayers = 0;
+        head.startPosition = new Point(0,0);
+
+        file.head = head;
+        file.layers = new Vector.<JimLayer>();
+
+        return file;
+    }
 
     public static function createEmptyLayerDefinition(tileSize:uint):LayerDefinition {
         var result:LayerDefinition = new LayerDefinition();

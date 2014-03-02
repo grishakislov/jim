@@ -7,6 +7,9 @@ import spark.layouts.VerticalAlign;
 public class EmptyLayerNavigator extends VGroup {
 
     public function EmptyLayerNavigator() {
+        width = 640;
+        height = 350;
+
         verticalAlign = VerticalAlign.MIDDLE;
         horizontalAlign = HorizontalAlign.CENTER;
 

@@ -5,6 +5,8 @@ import flash.display.BitmapData;
 import flash.errors.IllegalOperationError;
 import flash.utils.ByteArray;
 
+import ru.codekittens.jim.model.JimFile;
+
 import ru.codekittens.jim.model.JimModel;
 
 public class JimConverter {
@@ -14,8 +16,8 @@ public class JimConverter {
     private static const MAP_FILE_NAME:String = "map.bin";
     private static const TILES_FILE_NAME:String = "tiles.bin";
 
-    public static function decode(jimFile:ByteArray):JimModel {
-        var result:JimModel = new JimModel();
+    public static function decode(jimFile:ByteArray):JimFile {
+        var result:JimFile = new JimFile();
 
         var zip:FZip = new FZip();
         zip.loadBytes(jimFile);

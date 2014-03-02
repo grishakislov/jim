@@ -5,13 +5,22 @@ import flash.events.Event;
 public class ImageLoadedEvent extends Event {
 
     private var image:Bitmap;
+    private var tileSize:uint;
 
-    public function ImageLoadedEvent(image:Bitmap) {
-        super("image_loaded_event");
+    public static const IMAGE_LOADED:String = "image_loaded_event";
+
+    public function ImageLoadedEvent(type:String, image:Bitmap, tileSize:uint) {
+        super(type);
+        this.image = image;
+        this.tileSize = tileSize;
     }
 
     public function getImage():Bitmap {
         return image;
+    }
+
+    public function getTileSize():uint {
+        return tileSize;
     }
 }
 }

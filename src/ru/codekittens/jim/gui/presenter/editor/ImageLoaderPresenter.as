@@ -6,7 +6,6 @@ import flash.events.Event;
 import flash.events.IOErrorEvent;
 import flash.events.MouseEvent;
 import flash.events.NativeDragEvent;
-import flash.events.NativeWindowBoundsEvent;
 import flash.filesystem.File;
 import flash.filesystem.FileMode;
 import flash.filesystem.FileStream;
@@ -14,16 +13,13 @@ import flash.net.FileReference;
 import flash.utils.ByteArray;
 
 import mx.collections.ArrayList;
-
 import mx.collections.IList;
-
 import mx.managers.DragManager;
 
 import ru.codekittens.jim.App;
 import ru.codekittens.jim.gui.events.AppErrorEvent;
 import ru.codekittens.jim.gui.events.ImageLoadedEvent;
-
-import ru.codekittens.jim.gui.view.scanner.ImageLoaderPanel;
+import ru.codekittens.jim.gui.view.editor.layer.ImageLoaderPanel;
 
 public class ImageLoaderPresenter {
 
@@ -35,7 +31,7 @@ public class ImageLoaderPresenter {
         this.view = view;
 
         view.getLstLayer().dataProvider = getLayersListDataProvider();
-        view.getLstLayer().prompt = DEFAULT_LAYER_TEXT;
+        view.getLstLayer().prompt = LayerAddMode.NEW_LAYER.getName();
         view.getLstLayer().enabled = false;
 
         view.getDragContainer().addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER, function (event:NativeDragEvent):void {
@@ -87,8 +83,8 @@ public class ImageLoaderPresenter {
     private function getLayersListDataProvider():IList {
         var result:IList = new ArrayList();
         if (App.uiModel.hasLayers()) {
-            for (var i:int = 0; i < App.uiModel.currentLayers.length; i++) {
-                result.addItem(App.uiModel.currentLayers[i].definition.title);
+            for (var i:int = 0; i < App.uiModel.currentFile.layers.length; i++) {
+                result.addItem(App.uiModel.currentFile.layers[i].definition.title);
             }
         }
         return result;
@@ -106,7 +102,9 @@ public class ImageLoaderPresenter {
             App.eventBus.dispatchEvent(new AppErrorEvent("Invalid type"))
         } else {
             trace("Image loaded successfully")
-            App.eventBus.dispatchEvent(new ImageLoadedEvent(ImageLoadedEvent.IMAGE_LOADED, bitmap, view.getTileSizeStepper().value));
+            App.eventBus.dispatchEvent(
+                    new ImageLoadedEvent(
+                            ImageLoadedEvent.IMAGE_LOADED, bitmap, App.uiModel.currentFile.head.tileSize));
         }
     }
 

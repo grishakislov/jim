@@ -24,7 +24,6 @@ public class ImageLoaderPanel extends SkinnableContainer {
     private var btnLoad:Button;
     private var lblLayer:Label;
     private var lstLayer:DropDownList;
-    private var tileSizeStepper:NumericStepper;
 
     public function ImageLoaderPanel() {
 
@@ -63,21 +62,6 @@ public class ImageLoaderPanel extends SkinnableContainer {
 
         hGroup.addElement(createGap());
 
-        var stepperLabel:Label = new Label();
-        stepperLabel.text = "Tile size:";
-        stepperLabel.setStyle("color", "0xFFFFFF");
-
-        hGroup.addElement(stepperLabel);
-
-        tileSizeStepper = new NumericStepper();
-        tileSizeStepper.stepSize = 8;
-        tileSizeStepper.minimum = App.settings.MINIMUM_TILE_SIZE;
-        tileSizeStepper.maximum = App.settings.MAXIMUM_TILE_SIZE;
-        tileSizeStepper.value = App.settings.DEFAULT_TILE_SIZE;
-
-        hGroup.addElement(tileSizeStepper);
-        hGroup.addElement(createGap());
-
         dragContainer = new HGroup();
         dragContainer.verticalAlign = VerticalAlign.MIDDLE;
         btnLoad = new Button();
@@ -114,10 +98,6 @@ public class ImageLoaderPanel extends SkinnableContainer {
 
     public function getLstLayer():DropDownList {
         return lstLayer;
-    }
-
-    public function getTileSizeStepper():NumericStepper {
-        return tileSizeStepper;
     }
 
     public function getDragContainer():HGroup {

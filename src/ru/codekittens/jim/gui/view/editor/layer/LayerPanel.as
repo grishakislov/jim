@@ -1,18 +1,11 @@
 package ru.codekittens.jim.gui.view.editor.layer {
-import flash.display.Bitmap;
-
-import ru.codekittens.jim.Resources;
-import ru.codekittens.jim.gui.view.editor.layer.ImageLoaderPanel;
-import ru.codekittens.jim.gui.view.editor.layer.LayerNavigator;
-
-
-import spark.components.SkinnableContainer;
 import spark.components.VGroup;
 
-public class LayerPanel extends SkinnableContainer {
+public class LayerPanel extends VGroup {
 
     private var imageLoaderPanel:ImageLoaderPanel;
-    private var layerGroupPanel:LayerNavigator;
+    private var layerNavigator:LayerNavigator;
+    private var emptyLayerNavigator:EmptyLayerNavigator;
 
     public function LayerPanel() {
         var vGroup:VGroup = new VGroup();
@@ -20,17 +13,21 @@ public class LayerPanel extends SkinnableContainer {
 
         imageLoaderPanel = new ImageLoaderPanel();
         vGroup.addElement(imageLoaderPanel);
-
-        layerGroupPanel = new LayerNavigator();
-        vGroup.addElement(layerGroupPanel);
+        emptyLayerNavigator = new EmptyLayerNavigator();
+        layerNavigator = new LayerNavigator();
     }
 
     public function getImageLoaderPanel():ImageLoaderPanel {
         return imageLoaderPanel;
     }
 
-    public function getLayerPanel():LayerNavigator {
-        return layerGroupPanel;
+
+    public function getLayerNavigator():LayerNavigator {
+        return layerNavigator;
+    }
+
+    public function getEmptyLayerNavigator():EmptyLayerNavigator {
+        return emptyLayerNavigator;
     }
 }
 }
