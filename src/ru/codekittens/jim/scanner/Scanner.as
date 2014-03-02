@@ -7,6 +7,8 @@ import flash.globalization.NationalDigitsType;
 import flash.net.FileReference;
 import flash.utils.ByteArray;
 
+import ru.codekittens.jim.App;
+
 import ru.codekittens.jim.converter.JimConverter;
 import ru.codekittens.jim.model.JimFile;
 import ru.codekittens.jim.model.JimLayer;
@@ -29,7 +31,7 @@ public class Scanner {
 
     public static function scan(source:Bitmap, tileSize:uint):JimLayer {
         sourceBitmap = source;
-        var definition:LayerDefinition = JimHelper.createEmptyLayerDefinition(tileSize);
+        var definition:LayerDefinition = JimHelper.createEmptyLayerDefinition(tileSize, App.uiModel.currentFile.layers.length);
         definition.width = source.bitmapData.width / tileSize;
         definition.height = source.bitmapData.height / tileSize;
         hashedTiles = {};

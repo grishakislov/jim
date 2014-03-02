@@ -2,6 +2,8 @@ package ru.codekittens.jim.scanner {
 import flash.display.BitmapData;
 import flash.geom.Point;
 
+import ru.codekittens.jim.App;
+
 import ru.codekittens.jim.model.JimFile;
 import ru.codekittens.jim.model.JimFileHead;
 
@@ -28,9 +30,9 @@ public class JimHelper {
         return file;
     }
 
-    public static function createEmptyLayerDefinition(tileSize:uint):LayerDefinition {
+    public static function createEmptyLayerDefinition(tileSize:uint, layerNum:uint):LayerDefinition {
         var result:LayerDefinition = new LayerDefinition();
-        result.title = "New layer";
+        result.title = "Layer " + layerNum;
         result.tileSize = tileSize;
         return result;
     }

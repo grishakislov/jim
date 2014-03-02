@@ -19,7 +19,9 @@ import mx.managers.DragManager;
 import ru.codekittens.jim.App;
 import ru.codekittens.jim.gui.events.AppErrorEvent;
 import ru.codekittens.jim.gui.events.ImageLoadedEvent;
+import ru.codekittens.jim.gui.events.LayersChangedEvent;
 import ru.codekittens.jim.gui.view.editor.layer.ImageLoaderPanel;
+import ru.codekittens.jim.model.JimLayer;
 
 public class ImageLoaderPresenter {
 
@@ -30,9 +32,12 @@ public class ImageLoaderPresenter {
 
         this.view = view;
 
-        view.getLstLayer().dataProvider = getLayersListDataProvider();
         view.getLstLayer().prompt = LayerAddMode.NEW_LAYER.getName();
         view.getLstLayer().enabled = false;
+
+        App.eventBus.addEventListener(LayersChangedEvent.LAYERS_CHANGED, function(event:LayersChangedEvent):void {
+            updatePanel();
+        });
 
         view.getDragContainer().addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER, function (event:NativeDragEvent):void {
             if (event.clipboard.hasFormat(ClipboardFormats.FILE_LIST_FORMAT)) {
@@ -80,15 +85,26 @@ public class ImageLoaderPresenter {
 
     }
 
-    private function getLayersListDataProvider():IList {
-        var result:IList = new ArrayList();
+    private function updatePanel():void {
+        view.getLstLayer().enabled = App.uiModel.hasLayers();
+        view.getLstLayer().prompt = LayerAddMode.NEW_LAYER.getName();
         if (App.uiModel.hasLayers()) {
-            for (var i:int = 0; i < App.uiModel.currentFile.layers.length; i++) {
-                result.addItem(App.uiModel.currentFile.layers[i].definition.title);
-            }
+            view.getLstLayer().dataProvider = getLstLayersDataProvider();
+        }
+    }
+
+    private function getLstLayersDataProvider():IList {
+        var result:IList = new ArrayList();
+        result.addItem(LayerAddMode.NEW_LAYER.getName());
+        result.addItem(LayerAddMode.CURRENT_LAYER.getName());
+        var currentLayer:JimLayer;
+        for (var i:int = 0; i < App.uiModel.currentFile.layers.length; i++) {
+            currentLayer = App.uiModel.currentFile.layers[i];
+            result.addItem(currentLayer.definition.title);
         }
         return result;
     }
+
 
     private function ioErrorHandler(event:IOErrorEvent):void {
         App.eventBus.dispatchEvent(new AppErrorEvent("Unknown type"))
