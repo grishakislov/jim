@@ -3,14 +3,8 @@ import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
-import flash.globalization.NationalDigitsType;
-import flash.net.FileReference;
 import flash.utils.ByteArray;
 
-import ru.codekittens.jim.App;
-
-import ru.codekittens.jim.converter.JimConverter;
-import ru.codekittens.jim.model.JimFile;
 import ru.codekittens.jim.model.JimLayer;
 import ru.codekittens.jim.model.LayerDefinition;
 
@@ -29,26 +23,30 @@ public class Scanner {
     private static var model:JimLayer;
     private static var hashedTiles:Object;
 
-    public static function scan(source:Bitmap, tileSize:uint):JimLayer {
+    public static function scan(source:Bitmap, tileSize:uint, layerNum:uint):JimLayer {
         sourceBitmap = source;
-        var definition:LayerDefinition = JimHelper.createEmptyLayerDefinition(tileSize, App.uiModel.currentFile.layers.length);
+        var definition:LayerDefinition = JimHelper.createEmptyLayerDefinition(tileSize, layerNum);
         definition.width = source.bitmapData.width / tileSize;
         definition.height = source.bitmapData.height / tileSize;
-        hashedTiles = {};
         currentPoint = new Point();
         currentRect = new Rectangle(0, 0, tileSize, tileSize);
 
-        initLayer(definition);
+        reset(definition);
 
         process();
 
         return model;
     }
 
-    private static function initLayer(definition:LayerDefinition):void {
+    private static function reset(definition:LayerDefinition):void {
         model = new JimLayer();
         model.definition = definition;
         model.map = new ByteArray();
+        hashedTiles = {};
+
+        currentId = 0;
+        currentColumn = 0;
+        numTiles = 0;
 
         var totalTiles:uint = model.definition.width * model.definition.height;
         for (var i:int = 0; i < totalTiles; i++) {
@@ -118,34 +116,27 @@ public class Scanner {
 
     private static function hash(data:BitmapData):String {
         var result:String = "";
-        const MAX_HASH_LENGTH:uint = 64;
-        const NUM_ITERATIONS:uint = 64;
-        var byteArray:ByteArray = data.getPixels(data.rect);
-        var currentValue:uint = 0;
-        var currentPosition:uint;
-        byteArray.position = 0;
-        for (var i:int = 0; i < NUM_ITERATIONS; i++) {
-            currentValue = 0;
-            currentPosition = (byteArray.length - 3) / NUM_ITERATIONS * i;
-            if (currentPosition > 3) {
-                byteArray.position = currentPosition - 3;
-                currentValue += byteArray.readByte() + i;
-                currentValue += byteArray.readByte() + i;
-                currentValue += byteArray.readByte() + i;
-            } else {
-                currentValue += byteArray.readByte() + i;
-            }
-            result += currentValue.toString();
+        var hashChars:String = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        var start:ByteArray = data.getPixels(new Rectangle(0, 0, model.definition.tileSize, 1));
 
-        }
+        var mid1:ByteArray = data.getPixels(new Rectangle(0, 5, model.definition.tileSize, 1));
+        var mid2:ByteArray = data.getPixels(new Rectangle(0, 10, model.definition.tileSize, 1));
+        var end:ByteArray = data.getPixels(new Rectangle(0, 15, model.definition.tileSize, 1));
 
-        if (result.length > MAX_HASH_LENGTH) {
-            var newString:String = "";
+        start.position = mid1.position = mid2.position = end.position = 0;
 
-            for (i = 0; i < MAX_HASH_LENGTH; i++) {
-                newString += result.charAt(result.length / MAX_HASH_LENGTH * i);
-            }
-            return newString;
+        for (var i:int = 0; i < start.length; i++) {
+//            if (i % 2 > 0) {
+//                continue;
+//            }
+            var currentValue:uint = start.readByte();
+            currentValue += mid1.readByte();
+            currentValue += mid2.readByte();
+            currentValue += end.readByte();
+            currentValue += i * 3;
+            currentValue = currentValue % 256
+            var currentPosition:uint = hashChars.length * currentValue / 256;
+            result += hashChars.charAt(currentPosition);
         }
 
         return result;

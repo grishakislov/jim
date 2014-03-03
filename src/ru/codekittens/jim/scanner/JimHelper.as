@@ -39,6 +39,7 @@ public class JimHelper {
 
     public static function convertTilesDictionaryToBitmapData(layer:JimLayer):BitmapData {
         var result:BitmapData = new BitmapData(256, 256, true, 0);
+        layer.tileDictionary.position = 0;
         result.setPixels(result.rect, layer.tileDictionary);
         return result;
     }

@@ -6,29 +6,17 @@ import ru.codekittens.jim.gui.presenter.editor.LayerAddMode;
 
 public class ImageLoadedEvent extends Event {
 
-    private var _mode:LayerAddMode;
-    private var image:Bitmap;
-    private var tileSize:uint;
+    private var model:ImageLoadedModel;
 
     public static const IMAGE_LOADED:String = "image_loaded_event";
 
-    public function ImageLoadedEvent(type:String, image:Bitmap, tileSize:uint, mode:LayerAddMode) {
+    public function ImageLoadedEvent(type:String, model:ImageLoadedModel) {
         super(type);
-        this.image = image;
-        this.tileSize = tileSize;
-        this._mode = mode;
+        this.model = model;
     }
 
-    public function getImage():Bitmap {
-        return image;
-    }
-
-    public function getTileSize():uint {
-        return tileSize;
-    }
-
-    public function getMode():LayerAddMode {
-        return _mode;
+    public function getModel():ImageLoadedModel {
+        return model;
     }
 }
 }

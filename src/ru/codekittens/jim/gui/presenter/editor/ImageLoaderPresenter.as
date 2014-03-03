@@ -19,6 +19,7 @@ import mx.managers.DragManager;
 import ru.codekittens.jim.App;
 import ru.codekittens.jim.gui.events.AppErrorEvent;
 import ru.codekittens.jim.gui.events.ImageLoadedEvent;
+import ru.codekittens.jim.gui.events.ImageLoadedModel;
 import ru.codekittens.jim.gui.events.LayersChangedEvent;
 import ru.codekittens.jim.gui.view.editor.layer.ImageLoaderPanel;
 import ru.codekittens.jim.model.JimLayer;
@@ -29,7 +30,6 @@ public class ImageLoaderPresenter {
 
     private var view:ImageLoaderPanel;
     private static const DEFAULT_LAYER_TEXT:String = "New layer";
-    private var currentMode:LayerAddMode;
 
     public function ImageLoaderPresenter(view:ImageLoaderPanel) {
 
@@ -37,13 +37,20 @@ public class ImageLoaderPresenter {
 
         view.getLstLayer().prompt = LayerAddMode.NEW_LAYER.getName();
         view.getLstLayer().enabled = false;
-        currentMode = LayerAddMode.NEW_LAYER;
+        App.uiModel.currentLayerAddMode = LayerAddMode.NEW_LAYER;
 
         view.getLstLayer().addEventListener(IndexChangeEvent.CHANGE, function(event:IndexChangeEvent):void {
             var name:String = getLstLayersDataProvider().getItemAt(event.newIndex).toString();
             var mode:LayerAddMode = LayerAddMode.getByName(name);
-            currentMode = mode != null ? mode : LayerAddMode.EXISTING_LAYER;
-            trace(currentMode.getName());
+            var nameIsLayerName:Boolean = mode == null;
+            if (nameIsLayerName) {
+                App.uiModel.currentLayerAddMode = LayerAddMode.EXISTING_LAYER;
+                App.uiModel.currentLayerAddMode.setLayer(App.uiModel.findLayerByName(name));
+            } else {
+                App.uiModel.currentLayerAddMode = mode;
+            }
+            trace(App.uiModel.currentLayerAddMode.getName());
+
         });
 
         App.eventBus.addEventListener(LayersChangedEvent.LAYERS_CHANGED, function(event:LayersChangedEvent):void {
@@ -129,9 +136,13 @@ public class ImageLoaderPresenter {
             App.eventBus.dispatchEvent(new AppErrorEvent("Invalid type"))
         } else {
             trace("Image loaded successfully")
-            App.eventBus.dispatchEvent(
-                    new ImageLoadedEvent(
-                            ImageLoadedEvent.IMAGE_LOADED, bitmap, App.uiModel.currentFile.head.tileSize, currentMode));
+
+            var model:ImageLoadedModel = new ImageLoadedModel();
+            model.image = bitmap;
+            model.tileSize = App.uiModel.currentFile.head.tileSize;
+            model.mode = App.uiModel.currentLayerAddMode; //?
+
+            App.eventBus.dispatchEvent(new ImageLoadedEvent(ImageLoadedEvent.IMAGE_LOADED, model));
         }
     }
 

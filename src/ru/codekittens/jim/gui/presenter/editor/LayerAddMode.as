@@ -24,6 +24,10 @@ public class LayerAddMode {
         return layer;
     }
 
+    public function setLayer(layer:JimLayer):void {
+        this.layer = layer;
+    }
+
     public static function getByName(name:String):LayerAddMode {
         switch (name) {
             case NEW_LAYER.getName():

@@ -1,5 +1,6 @@
 package ru.codekittens.jim.gui.presenter.editor {
 import ru.codekittens.jim.App;
+import ru.codekittens.jim.UIModel;
 import ru.codekittens.jim.gui.events.ImageLoadedEvent;
 import ru.codekittens.jim.gui.events.LayersChangedEvent;
 import ru.codekittens.jim.gui.view.editor.layer.LayerPanel;
@@ -18,30 +19,83 @@ public class LayerPanelPresenter {
         layerNavigatorPresenter = new LayerNavigatorPresenter(view.getLayerNavigator());
 
         view.addElement(view.getEmptyLayerNavigator());
-        App.eventBus.addEventListener(ImageLoadedEvent.IMAGE_LOADED, function (event:ImageLoadedEvent):void {
-            var layer:JimLayer = Scanner.scan(event.getImage(), event.getTileSize());
-            App.uiModel.currentFile.layers.push(layer);
-            if (view.containsElement(view.getEmptyLayerNavigator())) {
-                view.removeElement(view.getEmptyLayerNavigator());
-                view.addElement(view.getLayerNavigator());
-            }
 
-            switch (event.getMode()) {
+        App.eventBus.addEventListener(ImageLoadedEvent.IMAGE_LOADED, function (event:ImageLoadedEvent):void {
+
+            prepareContainerForNewLayer();
+
+            switch (event.getModel().mode) {
                 case LayerAddMode.NEW_LAYER:
-                    layerNavigatorPresenter.addNewLayer(layer);
+                    handleNewLayer(event);
                     break;
                 case LayerAddMode.CURRENT_LAYER:
-                    layerNavigatorPresenter.updateCurrentLayer(layer);
+                    handleCurrentLayer(event)
+                    break;
+                case LayerAddMode.EXISTING_LAYER:
+                    handleExistingLayer(event)
                     break;
             }
-            //TODO: create new/update existing
 
             App.eventBus.dispatchEvent(new LayersChangedEvent(LayersChangedEvent.LAYERS_CHANGED));
         });
 
     }
 
+    private function handleNewLayer(event:ImageLoadedEvent):void {
+        var layerNum:uint;
+        layerNum = App.uiModel.currentFile.layers.length;
+        var scannedLayer:JimLayer = Scanner.scan(event.getModel().image, event.getModel().tileSize, layerNum);
+        App.uiModel.currentLayer = scannedLayer;
+        App.uiModel.currentFile.layers.push(scannedLayer);
+        layerNavigatorPresenter.addNewLayer(scannedLayer);
 
+    }
+
+    private function handleCurrentLayer(event:ImageLoadedEvent):void {
+        var layerNum:uint;
+        layerNum = App.uiModel.currentFile.layers.indexOf(App.uiModel.currentLayer);
+        var scannedLayer:JimLayer = Scanner.scan(event.getModel().image, event.getModel().tileSize, layerNum);
+        App.uiModel.currentLayer = scannedLayer;
+
+        var currentLayer:JimLayer;
+
+        for (var i:int = 0; i < App.uiModel.currentFile.layers.length; i++) {
+            currentLayer = App.uiModel.currentFile.layers[i];
+            if (currentLayer == App.uiModel.currentLayer) {
+                App.uiModel.currentFile.layers[i] = scannedLayer;
+            }
+        }
+        layerNavigatorPresenter.updateCurrentLayer(scannedLayer);
+
+    }
+
+    private function handleExistingLayer(event:ImageLoadedEvent):void {
+        var layerNum:uint;
+        var existingLayer:JimLayer = App.uiModel.findLayerByName(event.getModel().mode.getLayer().definition.title);
+        layerNum = App.uiModel.currentFile.layers.indexOf(existingLayer);
+        var scannedLayer:JimLayer = Scanner.scan(event.getModel().image, event.getModel().tileSize, layerNum);
+        App.uiModel.currentLayer = scannedLayer;
+
+        var index:uint;
+        var currentLayer:JimLayer;
+
+        for (var i:int = 0; i < App.uiModel.currentFile.layers.length; i++) {
+            currentLayer = App.uiModel.currentFile.layers[i];
+            if (currentLayer.definition.title == event.getModel().mode.getLayer().definition.title) {
+                App.uiModel.currentFile.layers[i] = event.getModel().mode.getLayer();
+                index = i;
+            }
+        }
+        layerNavigatorPresenter.updateExistingLayer(App.uiModel.currentLayer, index);
+
+    }
+
+    private function prepareContainerForNewLayer():void {
+        if (view.containsElement(view.getEmptyLayerNavigator())) {
+            view.removeElement(view.getEmptyLayerNavigator());
+            view.addElement(view.getLayerNavigator());
+        }
+    }
 
 }
 }
