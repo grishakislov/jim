@@ -4,8 +4,8 @@ import flash.geom.Point;
 
 import mx.events.FlexEvent;
 
-import ru.codekittens.jim.gui.events.AppWindowMovedEvent;
-import ru.codekittens.jim.gui.view.editor.layer.ImageLoaderPanel;
+import ru.codekittens.jim.ui.events.AppWindowMovedEvent;
+import ru.codekittens.jim.ui.view.editor.layer.ImageLoaderPanel;
 
 import spark.components.WindowedApplication;
 

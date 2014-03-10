@@ -1,6 +1,6 @@
 package ru.codekittens.jim {
-import ru.codekittens.jim.gui.presenter.button_panel.EditorMode;
-import ru.codekittens.jim.gui.presenter.editor.LayerAddMode;
+import ru.codekittens.jim.ui.presenter.button_panel.EditorMode;
+import ru.codekittens.jim.ui.presenter.editor.LayerAddMode;
 import ru.codekittens.jim.model.JimFile;
 import ru.codekittens.jim.model.JimLayer;
 

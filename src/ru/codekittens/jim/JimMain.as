@@ -2,17 +2,17 @@ package ru.codekittens.jim {
 import flash.display.Bitmap;
 import flash.events.EventDispatcher;
 
-import ru.codekittens.jim.gui.events.AppErrorEvent;
-import ru.codekittens.jim.gui.events.InitViewerEvent;
-import ru.codekittens.jim.gui.events.UIModeChangedEvent;
-import ru.codekittens.jim.gui.presenter.button_panel.BottomButtonPanelPresenter;
-import ru.codekittens.jim.gui.presenter.button_panel.EditorMode;
-import ru.codekittens.jim.gui.presenter.button_panel.UIMode;
-import ru.codekittens.jim.gui.presenter.editor.EditorPresenter;
-import ru.codekittens.jim.gui.presenter.viewer.ViewerPresenter;
-import ru.codekittens.jim.gui.view.button_panel.MainButtonPanel;
-import ru.codekittens.jim.gui.view.editor.EditorPanel;
-import ru.codekittens.jim.gui.view.viewer.ViewerPanel;
+import ru.codekittens.jim.ui.events.AppErrorEvent;
+import ru.codekittens.jim.ui.events.InitViewerEvent;
+import ru.codekittens.jim.ui.events.UIModeChangedEvent;
+import ru.codekittens.jim.ui.presenter.button_panel.BottomButtonPanelPresenter;
+import ru.codekittens.jim.ui.presenter.button_panel.EditorMode;
+import ru.codekittens.jim.ui.presenter.button_panel.UIMode;
+import ru.codekittens.jim.ui.presenter.editor.EditorPresenter;
+import ru.codekittens.jim.ui.presenter.viewer.ViewerPresenter;
+import ru.codekittens.jim.ui.view.button_panel.MainButtonPanel;
+import ru.codekittens.jim.ui.view.editor.EditorPanel;
+import ru.codekittens.jim.ui.view.viewer.ViewerPanel;
 import ru.codekittens.jim.model.JimFile;
 import ru.codekittens.jim.scanner.JimHelper;
 

@@ -27,6 +27,10 @@ public class JimHelper {
 
     public static function createEmptyLayerDefinition(tileSize:uint, layerNum:uint):LayerDefinition {
         var result:LayerDefinition = new LayerDefinition();
+        result.repeatX = 1;
+        result.repeatY = 1;
+        result.startOffsetX = 0;
+        result.startOffsetY = 0;
         result.title = "Layer " + layerNum;
         result.tileSize = tileSize;
         return result;
