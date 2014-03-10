@@ -1,21 +1,11 @@
 package ru.codekittens.jim.gui.presenter.button_panel {
-import flash.events.MouseEvent;
-
-import mx.events.IndexChangedEvent;
-
-import mx.events.ItemClickEvent;
-
 import ru.codekittens.jim.App;
-import ru.codekittens.jim.UIModel;
 import ru.codekittens.jim.gui.events.LayersChangedEvent;
-import ru.codekittens.jim.gui.events.EditorSelectedEvent;
-import ru.codekittens.jim.gui.events.ViewerSelectedEvent;
+import ru.codekittens.jim.gui.events.UIModeChangedEvent;
 import ru.codekittens.jim.gui.presenter.MainMode;
-
 import ru.codekittens.jim.gui.view.button_panel.MainButtonPanel;
 
 import spark.events.IndexChangeEvent;
-
 
 public class BottomButtonPanelPresenter {
 
@@ -26,12 +16,12 @@ public class BottomButtonPanelPresenter {
 
         var editorButtonGroupPresenter:EditorButtonGroupPresenter = new EditorButtonGroupPresenter(view.getEditorGroup());
 
-        App.eventBus.addEventListener(LayersChangedEvent.LAYERS_CHANGED, function(event:LayersChangedEvent):void {
+        App.eventBus.addEventListener(LayersChangedEvent.TYPE, function (event:LayersChangedEvent):void {
 //            view.getBtnViewer().enabled = App.uiModel.hasLayers();
         });
 
 
-        view.getButtonBar().addEventListener(IndexChangeEvent.CHANGE, function(event:IndexChangeEvent):void {
+        view.getButtonBar().addEventListener(IndexChangeEvent.CHANGE, function (event:IndexChangeEvent):void {
             switch (event.newIndex) {
                 case MainMode.EDITOR.getIndex():
                     if (view.containsElement(view.getViewerGroup())) {
@@ -39,8 +29,7 @@ public class BottomButtonPanelPresenter {
                     }
                     view.addElement(view.getEditorGroup());
                     view.getEditorGroup().getEditorButtonBar().selectedIndex = 0;//Level
-                    //TODO: get file
-//                    App.eventBus.dispatchEvent(new ViewerSelectedEvent(ViewerSelectedEvent.VIEWER_SELECTED, null))
+                    App.eventBus.dispatchEvent(new UIModeChangedEvent(UIModeChangedEvent.TYPE, UIMode.EDITOR));
                     break;
 
                 case MainMode.VIEWER.getIndex():
@@ -49,7 +38,7 @@ public class BottomButtonPanelPresenter {
                     }
                     view.addElement(view.getViewerGroup());
                     view.getViewerGroup().getViewerButtonBar().selectedIndex = 1;//2x
-//                    App.eventBus.dispatchEvent(new EditorSelectedEvent(EditorSelectedEvent.EDITOR_SELECTED));
+                    App.eventBus.dispatchEvent(new UIModeChangedEvent(UIModeChangedEvent.TYPE, UIMode.VIEWER));
                     break;
             }
         });

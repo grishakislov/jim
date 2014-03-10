@@ -4,7 +4,7 @@ import flash.geom.Point;
 
 public class AppWindowMovedEvent extends Event{
 
-    public static const MOVED:String = "app_window_moved";
+    public static const TYPE:String = "app_window_moved";
 
     private var delta:Point;
 

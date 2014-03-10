@@ -1,6 +1,5 @@
 package ru.codekittens.jim.gui.presenter.editor {
 import ru.codekittens.jim.model.JimLayer;
-import ru.codekittens.jim.model.LayerDefinition;
 
 public class LayerAddMode {
 

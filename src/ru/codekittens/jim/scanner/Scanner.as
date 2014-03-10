@@ -162,6 +162,7 @@ public class Scanner {
     }
 
     private static function saveResults():void {
+        model.map.position = 0;
         model.definition.tilesDictionarySize = numTiles;
         var bitmapData:BitmapData = createBitmapDataFromHashedTiles();
         model.tileDictionary = bitmapData.getPixels(bitmapData.rect);

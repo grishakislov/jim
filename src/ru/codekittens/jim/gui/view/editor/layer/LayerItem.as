@@ -22,8 +22,12 @@ public class LayerItem extends NavigatorContent {
         hGroup.paddingBottom = hGroup.paddingLeft = hGroup.paddingRight = hGroup.paddingTop = PADDING;
 
         hGroup.addElement(createLayerInfoBlock());
-        hGroup.addElement(createTilesPreviewBlock());
+//        hGroup.addElement(createTilesPreviewBlock());
+
+        var previewGroup:VGroup = new VGroup();
+        previewGroup.addElement(createTilesPreviewBlock())
         addElement(hGroup);
+        addElement(previewGroup);
     }
 
     private function createLayerInfoBlock():VGroup {

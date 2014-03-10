@@ -13,7 +13,7 @@ public class EditorPresenter {
         var levelPanelPresenter:LevelPanelPresenter = new LevelPanelPresenter(editorPanel.getLevelPanel());
         var layerPanelPresenter:LayerPanelPresenter = new LayerPanelPresenter(editorPanel.getLayerPanel());
 
-        App.eventBus.addEventListener(EditorModeChangedEvent.EDITOR_MODE_CHANGED, function (event:EditorModeChangedEvent):void {
+        App.eventBus.addEventListener(EditorModeChangedEvent.TYPE, function (event:EditorModeChangedEvent):void {
             editorPanel.removeAllElements();
             switch (event.getMode()) {
                 case EditorMode.LEVEL:

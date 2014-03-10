@@ -1,14 +1,6 @@
 package ru.codekittens.jim.gui.view.button_panel {
-import flashx.textLayout.formats.VerticalAlign;
-
 import mx.collections.ArrayList;
 import mx.controls.Label;
-import mx.controls.MenuBar;
-import mx.core.UIComponent;
-
-import org.osmf.layout.HorizontalAlign;
-
-import ru.codekittens.jim.App;
 
 import spark.components.Button;
 import spark.components.ButtonBar;

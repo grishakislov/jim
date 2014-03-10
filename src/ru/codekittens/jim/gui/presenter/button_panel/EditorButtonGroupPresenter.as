@@ -15,13 +15,13 @@ public class EditorButtonGroupPresenter {
         view.getEditorButtonBar().addEventListener(IndexChangeEvent.CHANGE, function (event:IndexChangeEvent):void {
             switch (event.newIndex) {
                 case EditorMode.LEVEL.getIndex():
-                    App.eventBus.dispatchEvent(new EditorModeChangedEvent(EditorModeChangedEvent.EDITOR_MODE_CHANGED, EditorMode.LEVEL));
+                    App.eventBus.dispatchEvent(new EditorModeChangedEvent(EditorModeChangedEvent.TYPE, EditorMode.LEVEL));
                     break;
                 case EditorMode.LAYERS.getIndex():
-                    App.eventBus.dispatchEvent(new EditorModeChangedEvent(EditorModeChangedEvent.EDITOR_MODE_CHANGED, EditorMode.LAYERS));
+                    App.eventBus.dispatchEvent(new EditorModeChangedEvent(EditorModeChangedEvent.TYPE, EditorMode.LAYERS));
                     break;
                 case EditorMode.CAMERA.getIndex():
-                    App.eventBus.dispatchEvent(new EditorModeChangedEvent(EditorModeChangedEvent.EDITOR_MODE_CHANGED, EditorMode.CAMERA));
+                    App.eventBus.dispatchEvent(new EditorModeChangedEvent(EditorModeChangedEvent.TYPE, EditorMode.CAMERA));
                     break;
             }
         });

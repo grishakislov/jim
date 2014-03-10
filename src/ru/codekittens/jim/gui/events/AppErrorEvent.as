@@ -3,12 +3,12 @@ import flash.events.Event;
 
 public class AppErrorEvent extends Event {
 
-    public static const ERROR:String = "error_event";
+    public static const TYPE:String = "error_event";
     private var message:String;
 
     public function AppErrorEvent(message:String) {
         this.message = message;
-        super (ERROR)
+        super (TYPE)
     }
 
     public function getMessage():String {

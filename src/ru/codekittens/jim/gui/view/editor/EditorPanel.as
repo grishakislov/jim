@@ -1,5 +1,4 @@
 package ru.codekittens.jim.gui.view.editor {
-import ru.codekittens.jim.gui.presenter.editor.*;
 import ru.codekittens.jim.gui.view.editor.camera.CameraPanel;
 import ru.codekittens.jim.gui.view.editor.layer.LayerPanel;
 import ru.codekittens.jim.gui.view.editor.level.LevelPanel;

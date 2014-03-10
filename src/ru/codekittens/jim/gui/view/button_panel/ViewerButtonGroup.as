@@ -5,7 +5,6 @@ import spark.components.Button;
 import spark.components.ButtonBar;
 import spark.components.Label;
 import spark.components.VGroup;
-import spark.layouts.VerticalAlign;
 
 public class ViewerButtonGroup extends VGroup {
 

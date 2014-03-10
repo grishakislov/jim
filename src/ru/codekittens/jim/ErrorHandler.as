@@ -8,8 +8,6 @@ import org.osmf.layout.HorizontalAlign;
 
 import spark.components.HGroup;
 
-import spark.layouts.VerticalLayout;
-
 public class ErrorHandler {
 
     private var window:JimWindow;

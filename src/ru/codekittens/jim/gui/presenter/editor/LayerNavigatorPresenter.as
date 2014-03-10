@@ -1,6 +1,5 @@
 package ru.codekittens.jim.gui.presenter.editor {
 import flash.display.BitmapData;
-import flash.utils.Dictionary;
 
 import mx.events.IndexChangedEvent;
 
@@ -9,7 +8,6 @@ import ru.codekittens.jim.gui.view.editor.layer.LayerItem;
 import ru.codekittens.jim.gui.view.editor.layer.LayerNavigator;
 import ru.codekittens.jim.model.JimLayer;
 import ru.codekittens.jim.scanner.JimHelper;
-
 
 public class LayerNavigatorPresenter {
 

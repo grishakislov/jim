@@ -1,11 +1,9 @@
 package ru.codekittens.jim.gui.view.editor.layer {
-import flash.display.InteractiveObject;
 import flash.events.NativeDragEvent;
 
 import flashx.textLayout.formats.VerticalAlign;
 
 import mx.core.UIComponent;
-import mx.effects.easing.Back;
 
 import ru.codekittens.jim.App;
 
@@ -13,7 +11,6 @@ import spark.components.Button;
 import spark.components.DropDownList;
 import spark.components.HGroup;
 import spark.components.Label;
-import spark.components.NumericStepper;
 import spark.components.SkinnableContainer;
 import spark.components.VGroup;
 

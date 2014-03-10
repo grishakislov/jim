@@ -1,7 +1,6 @@
 package ru.codekittens.jim.gui.view.editor.camera {
 import flashx.textLayout.formats.VerticalAlign;
 
-
 import org.osmf.layout.HorizontalAlign;
 
 import spark.components.HGroup;

@@ -53,7 +53,7 @@ public class ImageLoaderPresenter {
 
         });
 
-        App.eventBus.addEventListener(LayersChangedEvent.LAYERS_CHANGED, function(event:LayersChangedEvent):void {
+        App.eventBus.addEventListener(LayersChangedEvent.TYPE, function(event:LayersChangedEvent):void {
             updatePanel();
         });
 
@@ -142,7 +142,7 @@ public class ImageLoaderPresenter {
             model.tileSize = App.uiModel.currentFile.head.tileSize;
             model.mode = App.uiModel.currentLayerAddMode; //?
 
-            App.eventBus.dispatchEvent(new ImageLoadedEvent(ImageLoadedEvent.IMAGE_LOADED, model));
+            App.eventBus.dispatchEvent(new ImageLoadedEvent(ImageLoadedEvent.TYPE, model));
         }
     }
 

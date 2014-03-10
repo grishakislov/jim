@@ -1,6 +1,5 @@
 package ru.codekittens.jim.gui.presenter.editor {
 import ru.codekittens.jim.App;
-import ru.codekittens.jim.UIModel;
 import ru.codekittens.jim.gui.events.ImageLoadedEvent;
 import ru.codekittens.jim.gui.events.LayersChangedEvent;
 import ru.codekittens.jim.gui.view.editor.layer.LayerPanel;
@@ -20,7 +19,7 @@ public class LayerPanelPresenter {
 
         view.addElement(view.getEmptyLayerNavigator());
 
-        App.eventBus.addEventListener(ImageLoadedEvent.IMAGE_LOADED, function (event:ImageLoadedEvent):void {
+        App.eventBus.addEventListener(ImageLoadedEvent.TYPE, function (event:ImageLoadedEvent):void {
 
             prepareContainerForNewLayer();
 
@@ -36,7 +35,7 @@ public class LayerPanelPresenter {
                     break;
             }
 
-            App.eventBus.dispatchEvent(new LayersChangedEvent(LayersChangedEvent.LAYERS_CHANGED));
+            App.eventBus.dispatchEvent(new LayersChangedEvent(LayersChangedEvent.TYPE));
         });
 
     }

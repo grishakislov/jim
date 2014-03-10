@@ -1,13 +1,9 @@
 package ru.codekittens.jim.converter {
-import deng.fzip.FZip;
-
 import flash.display.BitmapData;
 import flash.errors.IllegalOperationError;
 import flash.utils.ByteArray;
 
 import ru.codekittens.jim.model.JimFile;
-
-import ru.codekittens.jim.model.JimModel;
 
 public class JimConverter {
 

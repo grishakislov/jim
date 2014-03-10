@@ -5,8 +5,8 @@ import flash.errors.IllegalOperationError;
 import flash.events.Event;
 import flash.events.KeyboardEvent;
 
-import jim_model.JimFile;
-import jim_model.LayerDefinition;
+import ru.codekittens.jim.model.JimFile;
+import ru.codekittens.jim.model.LayerDefinition;
 
 public class JimViewer extends Sprite {
 
@@ -31,9 +31,9 @@ public class JimViewer extends Sprite {
     private function loadModel():void {
         var currentDef:LayerDefinition;
         var bitmap:Bitmap;
-        for (var i:int = 0; i < model.head.numLayers; i++) {
-            currentDef = model.head.layers[i];
-            bitmap = new Bitmap(MapHelper.loadLayer(model.layers[i], model.head.layers[i]));
+        for (var i:int = 0; i < model.layers.length; i++) {
+            currentDef = model.layers[i].definition;
+            bitmap = new Bitmap(MapHelper.loadLayer(model.layers[i]));
             layers.push(bitmap);
             addChild(bitmap);
         }
@@ -77,7 +77,6 @@ public class JimViewer extends Sprite {
     private function onAddedToStage(event:Event):void {
 
     }
-
 
 }
 }

@@ -3,20 +3,17 @@ package ru.codekittens.jim.viewer {
 import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
-import flash.utils.ByteArray;
-
-import jim_model.JimLayer;
-import jim_model.LayerDefinition;
 
 import ru.codekittens.jim.model.JimLayer;
-
+import ru.codekittens.jim.model.LayerDefinition;
 import ru.codekittens.jim.scanner.JimHelper;
 
 internal class MapHelper {
 
     public static function loadLayer(layer:JimLayer):BitmapData {
-        var bitmapWidth:uint = definition.width * definition.tileSize;
-        var bitmapHeight:uint = definition.height * definition.tileSize;
+        var def:LayerDefinition = layer.definition;
+        var bitmapWidth:uint = def.width * def.tileSize;
+        var bitmapHeight:uint = def.height * def.tileSize;
         var bitmapData:BitmapData = new BitmapData(bitmapWidth, bitmapHeight, true, 0);
 
         var dictionary:BitmapData = JimHelper.convertTilesDictionaryToBitmapData(layer)
@@ -25,11 +22,11 @@ internal class MapHelper {
 
         for (var i:uint = 0; i < layer.map.length; i++) {
             currentId = layer.map.readByte();
-            var dictionaryPoint:Point = getDictionaryPointById(currentId, definition.tileSize);
+            var dictionaryPoint:Point = getDictionaryPointById(currentId, def.tileSize);
             var targetPoint:Point = new Point();
-            targetPoint.x = (i % definition.width) * definition.tileSize;
-            targetPoint.y = Math.floor(i / definition.width) * definition.tileSize;
-            bitmapData.copyPixels(dictionary, new Rectangle(dictionaryPoint.x, dictionaryPoint.y, definition.tileSize, definition.tileSize), targetPoint);
+            targetPoint.x = (i % def.width) * def.tileSize;
+            targetPoint.y = Math.floor(i / def.width) * def.tileSize;
+            bitmapData.copyPixels(dictionary, new Rectangle(dictionaryPoint.x, dictionaryPoint.y, def.tileSize, def.tileSize), targetPoint);
         }
 
         dictionary.dispose();

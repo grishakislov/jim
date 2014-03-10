@@ -2,13 +2,9 @@ package ru.codekittens.jim.scanner {
 import flash.display.BitmapData;
 import flash.geom.Point;
 
-import ru.codekittens.jim.App;
-
 import ru.codekittens.jim.model.JimFile;
 import ru.codekittens.jim.model.JimFileHead;
-
 import ru.codekittens.jim.model.JimLayer;
-
 import ru.codekittens.jim.model.LayerDefinition;
 import ru.codekittens.jim.model.ScrollType;
 
@@ -21,7 +17,6 @@ public class JimHelper {
         head.title = "New level";
         head.tileSize = 16;
         head.scrollType = ScrollType.FULL;
-        head.numLayers = 0;
         head.startPosition = new Point(0,0);
 
         file.head = head;

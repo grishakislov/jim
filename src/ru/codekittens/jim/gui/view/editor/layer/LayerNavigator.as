@@ -16,7 +16,8 @@ public class LayerNavigator extends VGroup {
         paddingRight = App.settings.SCANNER_PANEL_PADDING;
 
         layerTab = new TabNavigator();
-        layerTab.width = 582;
+        layerTab.width = 620;
+        layerTab.height = 396;
         addElement(layerTab);
     }
 
